@@ -1,0 +1,16 @@
+package input
+
+import (
+	"github.com/squillteam/powerflix-backend/internal/domain/entity"
+)
+
+type TrainingInput struct {
+	ID          string
+	Name        string
+	Description string
+	Cover       string
+}
+
+type GetAllTrainingUseCase interface {
+	Execute() ([]entity.Training, error)
+}
