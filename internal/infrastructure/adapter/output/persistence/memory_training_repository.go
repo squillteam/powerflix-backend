@@ -1,12 +1,15 @@
 package persistence
 
 import (
+	"sync"
+
 	"github.com/squillteam/powerflix-backend/internal/application/port/output"
 	"github.com/squillteam/powerflix-backend/internal/domain/entity"
 )
 
 type MemoryTrainingRepository struct {
 	trainings map[string]*entity.Training
+	mu        sync.RWMutex
 }
 
 func NewMemoryTrainingRepository() output.TrainingRepository {
@@ -47,6 +50,9 @@ func NewMemoryTrainingRepository() output.TrainingRepository {
 }
 
 func (r *MemoryTrainingRepository) GetAllTrainings() ([]entity.Training, error) {
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+
 	result := []entity.Training{}
 
 	for _, trainingPtr := range r.trainings {
