@@ -16,8 +16,12 @@ func NewTrainingUseCase(trainingRepo output.TrainingRepository) input.GetAllTrai
 	}
 }
 
-func (this trainingUseCaseImpl) Execute() ([]entity.Training, error) {
-	this.trainingRepo.GetAllTrainings()
+func (u trainingUseCaseImpl) Execute() ([]entity.Training, error) {
+	trainings, err := u.trainingRepo.GetAllTrainings()
 
-	return nil, nil
+	if err != nil {
+		return nil, err
+	}
+
+	return trainings, nil
 }
