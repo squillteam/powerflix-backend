@@ -17,7 +17,7 @@ func NewTrainingUseCase(trainingRepo output.TrainingRepository) input.GetAllTrai
 }
 
 func (this trainingUseCaseImpl) Execute() ([]entity.Training, error) {
-	this.trainingRepo.GetAllTraining()
+	this.trainingRepo.GetAllTrainings()
 
 	return nil, nil
 }

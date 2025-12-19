@@ -5,5 +5,5 @@ import (
 )
 
 type TrainingRepository interface {
-	GetAllTraining() ([]entity.Training, error)
+	GetAllTrainings() ([]entity.Training, error)
 }
