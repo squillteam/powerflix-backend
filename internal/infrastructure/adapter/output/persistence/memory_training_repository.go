@@ -53,7 +53,7 @@ func (r *MemoryTrainingRepository) GetAllTrainings() ([]entity.Training, error) 
 	r.mu.RLock()
 	defer r.mu.RUnlock()
 
-	result := []entity.Training{}
+	result := make([]entity.Training, 0, len(r.trainings))
 
 	for _, trainingPtr := range r.trainings {
 		result = append(result, *trainingPtr)
