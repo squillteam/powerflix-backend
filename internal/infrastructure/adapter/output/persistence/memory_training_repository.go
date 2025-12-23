@@ -18,11 +18,11 @@ func NewMemoryTrainingRepository() output.TrainingRepository {
 	}
 }
 
-func (c *MemoryTrainingRepository) Save(training entity.Training) (entity.Training, error) {
-	c.mu.Lock()
-	defer c.mu.Unlock()
+func (r *MemoryTrainingRepository) Save(training entity.Training) (entity.Training, error) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
 
-	c.trainings = append(c.trainings, &training)
+	r.trainings = append(r.trainings, &training)
 
 	return training, nil
 }
