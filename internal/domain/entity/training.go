@@ -6,3 +6,11 @@ type Training struct {
 	Description string
 	Cover       string
 }
+
+func NewTraining(name, description, cover string) *Training {
+	return &Training{
+		Name:        name,
+		Description: description,
+		Cover:       cover,
+	}
+}

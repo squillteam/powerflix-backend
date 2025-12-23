@@ -14,3 +14,7 @@ type TrainingInput struct {
 type GetAllTrainingUseCase interface {
 	Execute() ([]entity.Training, error)
 }
+
+type CreateTrainingUseCase interface {
+	Execute(trainingInput *TrainingInput) (*entity.Training, error)
+}

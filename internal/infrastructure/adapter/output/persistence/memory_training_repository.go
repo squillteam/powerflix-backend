@@ -8,48 +8,26 @@ import (
 )
 
 type MemoryTrainingRepository struct {
-	trainings map[string]*entity.Training
+	trainings []*entity.Training
 	mu        sync.RWMutex
 }
 
 func NewMemoryTrainingRepository() output.TrainingRepository {
 	return &MemoryTrainingRepository{
-		trainings: map[string]*entity.Training{
-			"1": &entity.Training{
-				ID:          "1",
-				Name:        "Arnold Biceps",
-				Description: "Arnold Biceps from hell",
-				Cover:       "https://example.com/cover.jpg",
-			},
-			"2": &entity.Training{
-				ID:          "2",
-				Name:        "Arnold Triceps",
-				Description: "Arnold Triceps from hell",
-				Cover:       "https://example.com/cover.jpg",
-			},
-			"3": &entity.Training{
-				ID:          "3",
-				Name:        "Arnold Chest",
-				Description: "Arnold Chest from hell",
-				Cover:       "https://example.com/cover.jpg",
-			},
-			"4": &entity.Training{
-				ID:          "4",
-				Name:        "Arnold Back",
-				Description: "Arnold Back from hell",
-				Cover:       "https://example.com/cover.jpg",
-			},
-			"5": &entity.Training{
-				ID:          "5",
-				Name:        "Arnold Legs",
-				Description: "Arnold Legs from hell",
-				Cover:       "https://example.com/cover.jpg",
-			},
-		},
+		trainings: []*entity.Training{},
 	}
 }
 
-func (r *MemoryTrainingRepository) GetAllTrainings() ([]entity.Training, error) {
+func (c *MemoryTrainingRepository) Save(training entity.Training) (entity.Training, error) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+
+	c.trainings = append(c.trainings, &training)
+
+	return training, nil
+}
+
+func (r *MemoryTrainingRepository) GetAll() ([]entity.Training, error) {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
 

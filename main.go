@@ -14,13 +14,13 @@ func main() {
 
 	trainings, err := trainingUseCase.Execute()
 	if err != nil {
-		fmt.Println("Error: ", err)
+		fmt.Println("Error:", err)
 		return
 	}
 
 	jsonData, err := json.MarshalIndent(trainings, "", " ")
 	if err != nil {
-		fmt.Println("Error converting to JSON: ", err)
+		fmt.Println("Error converting to JSON:", err)
 		return
 	}
 
