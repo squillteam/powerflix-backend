@@ -18,23 +18,22 @@ func NewMemoryTrainingRepository() output.TrainingRepository {
 	}
 }
 
-func (r *MemoryTrainingRepository) Save(training entity.Training) (entity.Training, error) {
+func (r *MemoryTrainingRepository) Save(training *entity.Training) (*entity.Training, error) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
-	r.trainings = append(r.trainings, &training)
+	r.trainings = append(r.trainings, training)
 
 	return training, nil
 }
 
-func (r *MemoryTrainingRepository) GetAll() ([]entity.Training, error) {
+func (r *MemoryTrainingRepository) GetAll() ([]*entity.Training, error) {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
 
-	result := make([]entity.Training, 0, len(r.trainings))
-
+	result := make([]*entity.Training, 0, len(r.trainings))
 	for _, trainingPtr := range r.trainings {
-		result = append(result, *trainingPtr)
+		result = append(result, trainingPtr)
 	}
 
 	return result, nil

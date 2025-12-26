@@ -5,14 +5,13 @@ import (
 )
 
 type TrainingInput struct {
-	ID          string
 	Name        string
 	Description string
 	Cover       string
 }
 
 type GetAllTrainingUseCase interface {
-	Execute() ([]entity.Training, error)
+	Execute() ([]*entity.Training, error)
 }
 
 type CreateTrainingUseCase interface {

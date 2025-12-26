@@ -22,7 +22,7 @@ func NewCreateTrainingUseCase(trainingRepository output.TrainingRepository) inpu
 func (c createTrainingUseCase) Execute(trainingInput *input.TrainingInput) (*entity.Training, error) {
 	training := entity.NewTraining(trainingInput.Name, trainingInput.Description, trainingInput.Cover)
 
-	savedTraining, err := c.trainingRepository.Save(*training)
+	savedTraining, err := c.trainingRepository.Save(training)
 
 	if err != nil {
 		return nil, err
