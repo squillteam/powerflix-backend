@@ -1,6 +1,8 @@
 package usecase
 
 import (
+	"fmt"
+
 	"github.com/squillteam/powerflix-backend/internal/application/port/input"
 	"github.com/squillteam/powerflix-backend/internal/application/port/output"
 	"github.com/squillteam/powerflix-backend/internal/domain/entity"
@@ -25,7 +27,7 @@ func (c createTrainingUseCase) Execute(trainingInput *input.TrainingInput) (*ent
 	savedTraining, err := c.trainingRepository.Save(training)
 
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Failed to create new training: %w", err)
 	}
 
 	return savedTraining, nil

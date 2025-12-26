@@ -1,6 +1,8 @@
 package usecase
 
 import (
+	"fmt"
+
 	"github.com/squillteam/powerflix-backend/internal/application/port/input"
 	"github.com/squillteam/powerflix-backend/internal/application/port/output"
 	"github.com/squillteam/powerflix-backend/internal/domain/entity"
@@ -20,7 +22,7 @@ func (u trainingUseCaseImpl) Execute() ([]*entity.Training, error) {
 	trainings, err := u.trainingRepo.GetAll()
 
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Failed to get all trainings: %w", err)
 	}
 
 	return trainings, nil
