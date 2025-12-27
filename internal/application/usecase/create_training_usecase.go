@@ -8,26 +8,27 @@ import (
 	"github.com/squillteam/powerflix-backend/internal/domain/entity"
 )
 
-// createTrainingUseCase provides the default implementation of the training creation use case.
 type createTrainingUseCase struct {
 	trainingRepository output.TrainingRepository
 }
 
-// NewCreateTrainingUseCase creates a new CreateTrainingUseCase that persists trainings using the given repository.
 func NewCreateTrainingUseCase(trainingRepository output.TrainingRepository) input.CreateTrainingUseCase {
 	return &createTrainingUseCase{
 		trainingRepository: trainingRepository,
 	}
 }
 
-// Execute creates a new Training entity from the provided input, saves it, and returns the created training.
 func (c createTrainingUseCase) Execute(trainingInput *input.TrainingInput) (*entity.Training, error) {
-	training := entity.NewTraining(trainingInput.Name, trainingInput.Description, trainingInput.Cover)
+	training, err := entity.NewTraining(trainingInput.Name, trainingInput.Description, trainingInput.Cover)
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to create training %w", err)
+	}
 
 	savedTraining, err := c.trainingRepository.Save(training)
 
 	if err != nil {
-		return nil, fmt.Errorf("Failed to create new training: %w", err)
+		return nil, fmt.Errorf("Failed to save training: %w", err)
 	}
 
 	return savedTraining, nil
