@@ -1,20 +1,28 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 
-	"github.com/squillteam/powerflix-backend/internal/domain/entity"
+	"github.com/squillteam/powerflix-backend/internal/application/usecase"
+	"github.com/squillteam/powerflix-backend/internal/infrastructure/adapter/output/persistence"
 )
 
 func main() {
-	fmt.Println("Hello World!")
+	repo := persistence.NewMemoryTrainingRepository()
+	trainingUseCase := usecase.NewTrainingUseCase(repo)
 
-	training := entity.Training{
-		ID:          "1",
-		Name:        "Arnold Biceps",
-		Description: "Anorld Biceps from hell",
-		Cover:       "https://example.com/cover.jpg",
+	trainings, err := trainingUseCase.Execute()
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
 	}
 
-	fmt.Printf("%+v\n", training)
+	jsonData, err := json.MarshalIndent(trainings, "", " ")
+	if err != nil {
+		fmt.Println("Error converting to JSON:", err)
+		return
+	}
+
+	fmt.Println(string(jsonData))
 }
