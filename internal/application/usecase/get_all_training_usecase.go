@@ -1,6 +1,8 @@
 package usecase
 
 import (
+	"fmt"
+
 	"github.com/squillteam/powerflix-backend/internal/application/port/input"
 	"github.com/squillteam/powerflix-backend/internal/application/port/output"
 	"github.com/squillteam/powerflix-backend/internal/domain/entity"
@@ -16,8 +18,12 @@ func NewTrainingUseCase(trainingRepo output.TrainingRepository) input.GetAllTrai
 	}
 }
 
-func (this trainingUseCaseImpl) Execute() ([]entity.Training, error) {
-	this.trainingRepo.GetAllTraining()
+func (u trainingUseCaseImpl) Execute() ([]*entity.Training, error) {
+	trainings, err := u.trainingRepo.GetAll()
 
-	return nil, nil
+	if err != nil {
+		return nil, fmt.Errorf("Failed to get all trainings: %w", err)
+	}
+
+	return trainings, nil
 }
